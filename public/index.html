@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Careers</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">🏏 Cricket Careers</div>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search players..." class="search-input">
+                    <button onclick="searchPlayers()" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="demo-mode">
+            Demo Mode: This frontend works with sample data. Connect to your backend API to use real data.
+        </div>
+
+        <div class="controls">
+            <button onclick="showAddPlayerModal()" class="btn btn-primary">Add New Player</button>
+            <button onclick="loadAllPlayers()" class="btn btn-secondary">Show All Players</button>
+        </div>
+
+        <div id="loadingDiv" class="loading" style="display: none;">
+            Loading players...
+        </div>
+
+        <div id="errorDiv" class="error" style="display: none;"></div>
+        <div id="successDiv" class="success" style="display: none;"></div>
+
+        <div id="playersContainer" class="players-grid"></div>
+    </div>
+
+    <!-- Add/Edit Player Modal -->
+    <div id="playerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Add New Player</h2>
+            <form id="playerForm">
+                <div class="form-group">
+                    <label for="playerName">Name:</label>
+                    <input type="text" id="playerName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="playerDob">Date of Birth:</label>
+                    <input type="date" id="playerDob" name="dateOfBirth" required>
+                </div>
+                <div class="form-group">
+                    <label for="playerBirthplace">Birthplace:</label>
+                    <input type="text" id="playerBirthplace" name="birthplace" required>
+                </div>
+                <div class="form-group">
+                    <label for="playerPhoto">Photo URL:</label>
+                    <input type="url" id="playerPhoto" name="photoUrl">
+                </div>
+                <div class="form-group">
+                    <label for="playerCareer">Career Description:</label>
+                    <textarea id="playerCareer" name="career" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="playerMatches">Matches:</label>
+                    <input type="number" id="playerMatches" name="matches" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="playerRuns">Runs:</label>
+                    <input type="number" id="playerRuns" name="runs" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="playerFifties">Fifties:</label>
+                    <input type="number" id="playerFifties" name="fifties" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="playerCenturies">Centuries:</label>
+                    <input type="number" id="playerCenturies" name="centuries" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="playerWickets">Wickets:</label>
+                    <input type="number" id="playerWickets" name="wickets" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="playerAverage">Average:</label>
+                    <input type="number" id="playerAverage" name="average" step="0.01" min="0" value="0">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Player</button>
+            </form>
+        </div>
+    </div>
+    <script src="server.js"></script>
+</body>
+</html>
