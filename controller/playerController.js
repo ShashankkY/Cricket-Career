@@ -2,6 +2,7 @@ const { Player, Match } = require('../models');
 const { Op } = require('sequelize');
 const updatePlayerStats = require('../utils/updateStats');
 
+// Get all players with matches
 exports.getAllPlayers = async (req, res) => {
   try {
     const players = await Player.findAll({
@@ -13,6 +14,7 @@ exports.getAllPlayers = async (req, res) => {
   }
 };
 
+// Get a single player by ID
 exports.getPlayerById = async (req, res) => {
   try {
     const player = await Player.findByPk(req.params.id, {
@@ -25,11 +27,16 @@ exports.getPlayerById = async (req, res) => {
   }
 };
 
+// 🔧 FIXED: Search players by name OR birthplace
 exports.searchPlayerByName = async (req, res) => {
   try {
+    const searchTerm = req.params.name.toLowerCase();
     const players = await Player.findAll({
       where: {
-        name: { [Op.like]: `%${req.params.name}%` }
+        [Op.or]: [
+          { name: { [Op.like]: `%${searchTerm}%` } },
+          { birthplace: { [Op.like]: `%${searchTerm}%` } }
+        ]
       },
       include: [{ model: Match }]
     });
@@ -39,6 +46,7 @@ exports.searchPlayerByName = async (req, res) => {
   }
 };
 
+// Create a new player
 exports.createPlayer = async (req, res) => {
   try {
     const player = await Player.create(req.body);
@@ -48,6 +56,7 @@ exports.createPlayer = async (req, res) => {
   }
 };
 
+// Update an existing player
 exports.updatePlayer = async (req, res) => {
   try {
     const player = await Player.findByPk(req.params.id);
@@ -60,6 +69,7 @@ exports.updatePlayer = async (req, res) => {
   }
 };
 
+// Delete a player
 exports.deletePlayer = async (req, res) => {
   try {
     const player = await Player.findByPk(req.params.id);
@@ -72,6 +82,7 @@ exports.deletePlayer = async (req, res) => {
   }
 };
 
+// Add a match to a player
 exports.addMatchForPlayer = async (req, res) => {
   try {
     const player = await Player.findByPk(req.params.id);

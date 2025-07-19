@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const playerController = require('../controller/playerController');
 
-router.get('/', playerController.getAllPlayers);
-router.get('/:id', playerController.getPlayerById);
+// Place specific routes BEFORE dynamic ones
 router.get('/search/:name', playerController.searchPlayerByName);
+router.get('/:id', playerController.getPlayerById);
+
+router.get('/', playerController.getAllPlayers);
 router.post('/', playerController.createPlayer);
 router.put('/:id', playerController.updatePlayer);
 router.delete('/:id', playerController.deletePlayer);
